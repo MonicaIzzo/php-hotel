@@ -49,23 +49,31 @@ require 'partials/data/hotel.php';
         </header>
         <!-- MAIN -->
         <main>
-
-
-            <ul>
-                <?php foreach ($hotels as $hotel) : ?>
-                    <!-- ARRAY HOTEL -->
-                    <li>
-                        <!-- ARRAY ASSOCIATIVO HOTEL (con i dettagli) -->
-                        <ul>
-                            <?php foreach ($hotel as $key => $value) : ?>
-                                <li><strong><?= $key ?></strong>:<?= $value ?></li>
-                            <?php endforeach ?>
-                        </ul>
-                    </li>
-                <?php endforeach ?>
-            </ul>
+            <table class="table">
+                <!-- Intestazione tabella -->
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Parking</th>
+                        <th scope="col">Vote</th>
+                        <th scope="col">Distance</th>
+                    </tr>
+                </thead>
+                <!-- Corpo della tabella-->
+                <tbody>
+                    <?php foreach ($hotels as $hotel) : ?>
+                        <tr>
+                            <th scope="row"><?= $hotel['name'] ?></th>
+                            <td><?= $hotel['description'] ?></td>
+                            <td><?= $hotel['parking'] ? 'Yes' : 'No' ?></td>
+                            <td><?= $hotel['vote'] ?> /5</td>
+                            <td><?= $hotel['distance_to_center'] ?> Km</td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </main>
-
     </div>
 </body>
 
