@@ -13,13 +13,41 @@ Bonus:
 1 - Aggiungere un form ad inizio pagina che tramite una richiesta GET permetta di filtrare gli hotel che hanno un parcheggio.
 
 2 - Aggiungere un secondo campo al form che permetta di filtrare gli hotel per voto (es. inserisco 3 ed ottengo tutti gli hotel che hanno un voto di tre stelle o superiore)
-NOTA :mega:: deve essere possibile utilizzare entrambi i filtri contemporaneamente (es. ottenere una lista con hotel che dispongono di parcheggio e che hanno un voto di tre stelle o superiore)
+NOTA: deve essere possibile utilizzare entrambi i filtri contemporaneamente (es. ottenere una lista con hotel che dispongono di parcheggio e che hanno un voto di tre stelle o superiore)
 Se non viene specificato nessun filtro, visualizzare come in precedenza tutti gli hotel.
 
 -->
 
 <?php
 require 'partials/data/hotel.php';
+
+// Preparo i valori dei default
+$checked = '';
+$rating = $_GET['rating'] ?? null;
+
+// Controllo se devo filtare per parcheggio
+if (isset($_GET['parking'])) {
+    // setto il flag per spuntare il checkbox
+    $checked = 'checked';
+
+    $parking_hotels = [];
+
+    foreach ($hotels as $hotel) {
+        if ($hotel['parking']) $parking_hotels[] = $hotel;
+    }
+
+    $hotels = $parking_hotels;
+}
+
+// filtro per voto
+if ($rating) {
+    $filtered_hotels = [];
+
+    foreach ($hotels as $hotel) {
+        if ($hotel['vote'] >= $rating) $filtered_hotels[] = $hotel;
+    }
+    $hotels = $filtered_hotels;
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,11 +74,28 @@ require 'partials/data/hotel.php';
     <div class="container mt-5">
         <!-- HEADER -->
         <header>
+            <hr>
             <h1>Hotels</h1>
+            <form action="" method="GET">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" value="" id="parking" name="parking" <?= $checked ?>>
+                        <label for="parking" class="form-check-label">Mostra solo hotel con parcheggio</label>
+                    </div>
+
+                    <div class="mb-3 d-flex align-items-center">
+                        <label for="rating" class="form-label me-2">Rating</label>
+                        <input type="number" class="form-control" id="rating" name="rating" value="<?= $rating ?? 1 ?>" min="1" max="5" step="1">
+
+                    </div>
+                    <button class="btn btn-primary" type="submit">Filtra</button>
+                </div>
+            </form>
+            <hr>
         </header>
         <!-- MAIN -->
         <main>
-            <table class="table">
+            <table class=" table">
                 <!-- Intestazione tabella -->
                 <thead>
                     <tr>
