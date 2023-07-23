@@ -49,9 +49,19 @@ require 'partials/data/hotel.php';
         </header>
         <!-- MAIN -->
         <main>
+
+
             <ul>
                 <?php foreach ($hotels as $hotel) : ?>
-                    <li><?= $hotel['name'] ?></li>
+                    <!-- ARRAY HOTEL -->
+                    <li>
+                        <!-- ARRAY ASSOCIATIVO HOTEL (con i dettagli) -->
+                        <ul>
+                            <?php foreach ($hotel as $key => $value) : ?>
+                                <li><strong><?= $key ?></strong>:<?= $value ?></li>
+                            <?php endforeach ?>
+                        </ul>
+                    </li>
                 <?php endforeach ?>
             </ul>
         </main>
