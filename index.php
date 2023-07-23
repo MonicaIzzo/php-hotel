@@ -39,6 +39,7 @@ require 'partials/data/hotel.php';
 
     <!-- stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -66,7 +67,11 @@ require 'partials/data/hotel.php';
                         <tr>
                             <th scope="row"><?= $hotel['name'] ?></th>
                             <td><?= $hotel['description'] ?></td>
-                            <td><?= $hotel['parking'] ? 'Yes' : 'No' ?></td>
+                            <!-- PARKING -->
+                            <td>
+                                <?php $icon = $hotel['parking'] ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger' ?>
+                                <i class="bi <?= $icon ?>"></i>
+                            </td>
                             <td><?= $hotel['vote'] ?> /5</td>
                             <td><?= $hotel['distance_to_center'] ?> Km</td>
                         </tr>
